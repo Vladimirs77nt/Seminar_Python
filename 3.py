@@ -7,4 +7,3 @@
 num = int(input("Введите число: "))
 for i in range(-num, num):
     print (i)
-    
