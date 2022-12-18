@@ -17,17 +17,10 @@ def sum_digit(num):
         num = num//10
     return summ_digit
 
-# функция 2 - перевод цифр после точки в целое число
+# функция 2 - перевод цифр после точки в целое число / число должо быть меньше единицы !!!
 def digit_down(number):
     number = float(round(number,10))
-    res = int(0)
-    sum_null = int(0)
-    while sum_null < 10:
-        number = round(number * 10, 10)
-        a = int (number)
-        res = res*10 + a
-        number -= a
-        sum_null += 1
+    res = int(number * (10 ** 9))
     return res
 
 # программа
