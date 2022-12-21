@@ -5,10 +5,15 @@
 # [Негафибоначчи]
 
 num = int(input("Введите целое число: "))
-fibonacci = [1, 0, 1]
+if num<0: num = -num
+fibonacci = [0]
+if num > 0:
+        fibonacci = [1, 0, 1]
 fib1, fib2 = 0, 1
-for i in range(num):
-    fib2 = fib1 + fib2
-    
-    if i == 0:
-        fibonacci.append
+n = -1
+for i in range(num-1):
+    fib1, fib2 = fib2, fib1 + fib2
+    fibonacci.append(fib2)
+    fibonacci.insert(0,fib2*n)
+    n = -n
+print(fibonacci)
