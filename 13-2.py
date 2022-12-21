@@ -16,4 +16,4 @@ while True:
     if start == -1:
         break
     count += 1
-print("Количество вхождений символа в строку: ", count) 
+print("Количество вхождений символа в строку: ", count)
