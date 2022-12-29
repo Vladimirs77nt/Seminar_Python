@@ -8,12 +8,19 @@
 # - 3 -> 11
 # - 2 -> 10
 
+# num = int(input("Введите целое десятичное число: "))
+# res = ""
+# while num > 0:
+#     if num % 2 == 0:
+#         res = "0" + res
+#     else:
+#         res = "1" + res
+#     num = num//2
+# print(int(res))
+
 num = int(input("Введите целое десятичное число: "))
 res = ""
 while num > 0:
-    if num % 2 == 0:
-        res = "0" + res
-    else:
-        res = "1" + res
+    res = str(num%2) + res
     num = num//2
 print(int(res))
