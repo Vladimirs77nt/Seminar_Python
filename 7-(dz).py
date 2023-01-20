@@ -14,4 +14,6 @@ for X in range (2):
             result2 = int (not X and not Y and not Z) # результат логических операций правой части уравнения
             print ("|{0:^3}|{1:^3}|{2:^3}|{3:^14}|{4:^14}|".format(X, Y, Z, result1, result2),end="")
             if result1 == result2:
-                print (" <-значение левой половины уравнения равно правой половине")
+                print ("true")
+            else:
+                print ("false")
