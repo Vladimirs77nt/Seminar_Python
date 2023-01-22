@@ -11,15 +11,15 @@ c = int(input())
 
 d = b**2 - 4*a*c
 if a!=0:
-if d>0:
-x1 = (-b + math.sqrt(d))/(2*a)
-x2 = (-b - math.sqrt(d))/(2*a)
-print(x1,x2)
-elif d == 0:
-x = -b / (2 * a)
-print(x)
+    if d>0:
+        x1 = (-b + math.sqrt(d))/(2*a)
+        x2 = (-b - math.sqrt(d))/(2*a)
+        print(x1,x2)
+    elif d == 0:
+        x = -b / (2 * a)
+        print(x)
+    else:
+        print("net korney")
 else:
-print("net korney")
-else:
-x = -c/b
+    x = -c/b
 print(x)
