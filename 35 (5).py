@@ -14,7 +14,7 @@
 #     # c = c + (list(lambda b[j]: b[j]==i for j in range(len(b))))
 # print ("Пересечение:", type(c), c)
 
-# # Б) РЕШЕНИЕ ОТ АРТЕМА
+# # Б) РЕШЕНИЕ ОТ АРТУРА
 a = [1, 2, 3, 5, 7, 8, 9, 10]
 b = [1, 2, 4, 8, 9]
 c = list(filter(lambda j: j in a, b))

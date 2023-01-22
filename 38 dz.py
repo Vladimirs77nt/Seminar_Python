@@ -20,7 +20,7 @@
 # text2 = list(filter(lambda x: x[1]==" ", text2))
 # print(text2)
 
-# Б) РЕШЕНИЕ ОТ АРТЕМА
+# Б) РЕШЕНИЕ ОТ АРТУРА
 text = "ааабваа! аааа, аабв вввв. Абв ггг"
 print(text)
 text_list = text.split()
