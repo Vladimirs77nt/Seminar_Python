@@ -76,10 +76,10 @@ def polynom_summ(a,b):
 
 # 1. создаем два новых файла со рандомными многочленами - рабочие файлы: "text_1.txt" и "text_2.txt"
 # т.к. файлы уже есть - закомментировал... // но можно проверить как работает
-# print()
-# print("Запись файлов...")
-# polynomial_1 = create_file_polynom('text_1.txt')
-# polynomial_2 = create_file_polynom('text_2.txt')
+print()
+print("Запись файлов...")
+polynomial_1 = create_file_polynom('text_1.txt')
+polynomial_2 = create_file_polynom('text_2.txt')
 
 # 2. читаем два файла с готовыми многочленами - рабочие файлы: "text_1.txt" и "text_2.txt"
 print()
