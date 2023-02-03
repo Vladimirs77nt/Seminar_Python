@@ -75,9 +75,10 @@ def proverka_pobeda(message):
     # bot_igrok = 2  -- УМНЫЙ БОТ
 def hod_bot(message):
     global igrok, conf, conf_igrok, bot_igrok
-    if conf <29: num = conf
-    elif bot_igrok == 1: num = random.randint(1,28)
-    else: num = (conf - (conf//28)*28)-1
+    if bot_igrok == 1: num = random.randint(1,28)
+    if bot_igrok == 2: num = (conf - (conf//28)*28)-1
+    if num == 0: num = random.randint(1,28)
+    if conf < 29: num = conf
     text = "Бот взял " + str(num) + " конфет"
     bot.send_message(message.chat.id,text)
     conf -= num
@@ -89,6 +90,7 @@ def hod_bot(message):
         bot.send_message(message.chat.id,text)
         bot.send_message(message.chat.id,"Ход переходит игроку № 1")
         bot.send_message(message.chat.id,"Игрок № 1 - введи количество конфет которые ты возьмешь: ")
+        print("Ход переходит игроку № 1")
 
 # ИГРА ЗАВЕРШЕНА
 def end_game(message):
