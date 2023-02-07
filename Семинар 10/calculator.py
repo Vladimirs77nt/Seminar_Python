@@ -124,7 +124,7 @@ def log_calc(num1, num2, res):
     global txt, text
     txt = txt + (f",{num1},{num2},{text},") + str(res)
     print(txt)
-    file = open("log.csv", "a", encoding='utf-8')
+    file = open("log_calc.csv", "a", encoding='utf-8')
     file.write(f"{txt}\n")
     file.close()
     print("файл записан")
