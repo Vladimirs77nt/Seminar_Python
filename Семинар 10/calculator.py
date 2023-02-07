@@ -3,6 +3,7 @@ import cmath        # модуль для работы с комплексным
 import datetime     # модуль времени
 import telebot      # модуль для работы ботом в Telegram
 from telebot import types
+
 # pyTelegramBotAPI 4.9.0
 # https://pypi.org/project/pyTelegramBotAPI/
 bot = telebot.TeleBot("5516433386:AAGIRNxLwMSR-UZTmoeu0fWlyIHVlCrpoN4")
@@ -14,11 +15,13 @@ bot = telebot.TeleBot("5516433386:AAGIRNxLwMSR-UZTmoeu0fWlyIHVlCrpoN4")
 def button(message):
     print("/start")
     # глоабальные переменные
-    global calc, num_text, num, num1, num2, res
+    global calc, num_text, num, num1, num2, res, txt, text
     calc = 0        # тип калькулятора
     num_text = []   # начальные значения введенных чисел
     num = 0         # сколько введено чисел
     # res = 0         # результат
+    text = ""
+    txt = (f"{datetime.datetime.now()},{message.from_user.username},{message.from_user.first_name},{message.from_user.last_name}")
     print("Запуск контроллера калькулятора")
     bot.send_message(message.chat.id,"Калькулятор для работы с рациональными и комплексными числами")
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -56,30 +59,35 @@ def summ(message, num1, num2):
     res = num1 + num2
     bot.send_message(message.chat.id,"Сумма: "+str(res))
     bot.send_message(message.chat.id,"Перезапустите калькулятор /start")
+    log_calc(num1, num2, res)
 
 # --- МОДУЛЬ ВЫЧИТАНИЯ ---
 def diff(message, num1, num2):
     res = num1 - num2
     bot.send_message(message.chat.id,"Разница: "+str(res))
     bot.send_message(message.chat.id,"Перезапустите калькулятор /start")
+    log_calc(num1, num2, res)
 
 # --- МОДУЛЬ УМНОЖЕНИЯ ---
 def mult(message, num1, num2):
     res = num1 * num2
     bot.send_message(message.chat.id,"Произведение: "+str(res))
     bot.send_message(message.chat.id,"Перезапустите калькулятор /start")
+    log_calc(num1, num2, res)
 
 # --- МОДУЛЬ ДЕЛЕНИЯ ---
 def div(message, num1, num2):
     res = num1 / num2
     bot.send_message(message.chat.id,"Деление: "+str(res))
     bot.send_message(message.chat.id,"Перезапустите калькулятор /start")
+    log_calc(num1, num2, res)
 
 # --- МОДУЛЬ ЦЕЛОЧИСЛЕННОГО ДЕЛЕНИЯ ---
 def int_div(message, num1, num2):
     res = num1 // num2
     bot.send_message(message.chat.id,"Целочисленное деление: "+str(res))
     bot.send_message(message.chat.id,"Перезапустите калькулятор /start")
+    log_calc(num1, num2, res)
 
 # --- МОДУЛЬ ОСТАТКА ОТ ДЕЛЕНИЯ ---
 def rem_div(message, num1, num2):
@@ -87,6 +95,7 @@ def rem_div(message, num1, num2):
     bot.send_message(message.chat.id,"Остаток от деление: "+str(res))
     bot.send_message(message.chat.id,str(res))
     bot.send_message(message.chat.id,"Перезапустите калькулятор /start")
+    log_calc(num1, num2, res)
 
 # --- МОДУЛЬ ПРОВЕРКИ ВВОДА ЧИСЛА ПОЛЬЗОВАТЕЛЯ ---
 def input_num(message, num_text):
@@ -94,8 +103,10 @@ def input_num(message, num_text):
         global calc, num1, num2, num
         print("введены два числа через разделитель: обаботка...")
         if num == 0:
-            if calc == 1: num1 = input_frac_number(num_text)
-            if calc == 2: num1 = input_complex_number(num_text)
+            if calc == 1:
+                num1 = input_frac_number(num_text)
+            if calc == 2:
+                num1 = input_complex_number(num_text)
             num = 1
             bot.send_message(message.chat.id,"Введите второе число:")
         elif num == 1:
@@ -108,14 +119,25 @@ def input_num(message, num_text):
             num = 2
         else: bot.send_message(message.chat.id,"Нужно выбрать операцию над числами")
 
+# --- МОДУЛЬ ЛОГИРОВАНИЯ ---
+def log_calc(num1, num2, res):
+    global txt, text
+    txt = txt + (f",{num1},{num2},{text},") + str(res)
+    print(txt)
+    file = open("log.csv", "a", encoding='utf-8')
+    file.write(f"{txt}\n")
+    file.close()
+    print("файл записан")
+
 # ------------------------------------------------------------------------------------
 # Контроллер калькулятора
 @bot.message_handler(content_types=["text"])
 def controller (message):
-    global calc, num_text, num, num1, num2, res
+    global calc, num_text, num, num1, num2, txt, text
     text = message.text
     if text == "Калькулятор: рациональные числа":
         calc = 1  # Режим Рациональных чисел
+        txt = txt + ",рациональные числа"
         print("Вводим рациональные числа")
         bot.send_message(message.chat.id,"Введите два рациональных числа вида (m/n)")
         if num == 0:
@@ -123,6 +145,7 @@ def controller (message):
             bot.send_message(message.chat.id,"Введите первое число:")
     if text == "Калькулятор: комплексные числа":
         calc = 2  # Режим Комплексных чисел
+        txt = txt + ",комплексные числа"
         print("Вводим комплексные числа")
         bot.send_message(message.chat.id,"Введите два комплексных числа вида (a + b*j)")
         if num == 0:
@@ -143,12 +166,8 @@ def controller (message):
             div(message, num1, num2)
         if text == "Целочисленное деление (//)":
             int_div(message, num1, num2)
-        if text == "Остаток от деления (%)" and calc == 1:
-            res = num1 % num2
-            bot.send_message(message.chat.id,"Остаток от деления двух рациональных чисел:")
-            bot.send_message(message.chat.id,str(res))
-            num = 0
-            bot.send_message(message.chat.id,"Перезапустите калькулятор /start")
+        if text == "Остаток от деления (%)":
+            rem_div(message, num1, num2)
 
     # операции над комплексными числами
     if calc == 2:
